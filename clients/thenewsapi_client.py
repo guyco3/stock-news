@@ -1,5 +1,5 @@
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import List
 from models.article import Article
 from config.settings import Settings
@@ -9,13 +9,13 @@ class TheNewsAPIClient(NewsClient):
     def fetch_articles(self) -> List[Article]:
         try:
             # Calculate date range
-            published_after = datetime.utcnow() - timedelta(days=Settings.TIME_DELTA_DAYS)
+            published_after = (datetime.now(timezone.utc) - timedelta(hours=Settings.TIME_DELTA_HOURS)).strftime("%Y-%m-%dT%H:%M:%S")
             
             # Prepare API request
             params = {
                 "api_token": Settings.THE_NEWS_API_KEY,
                 "search": Settings.QUERY.replace(" OR ", " | "),
-                "published_after": published_after.strftime("%Y-%m-%dT%H:%M:%S"),
+                "published_after": published_after,
                 "language": "en",
                 "limit": 10  # Free tier limit
             }

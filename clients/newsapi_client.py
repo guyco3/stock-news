@@ -4,17 +4,19 @@ from typing import List
 from models.article import Article
 from config.settings import Settings
 from clients.base_client import NewsClient
+from datetime import datetime, timedelta, timezone
+
 
 class NewsAPIClient(NewsClient):
     def fetch_articles(self) -> List[Article]:
         try:
             # Calculate date range
-            published_after = (datetime.utcnow() - timedelta(days=Settings.TIME_DELTA_DAYS))
-            
+            published_after = (datetime.now(timezone.utc) - timedelta(hours=Settings.TIME_DELTA_HOURS)).strftime("%Y-%m-%d")
+
             # Prepare API request
             params = {
                 "q": Settings.QUERY,
-                "from": published_after.strftime("%Y-%m-%d"),
+                "from": published_after,
                 "sortBy": "publishedAt",
                 "language": "en",
                 "apiKey": Settings.NEWS_API_KEY,
@@ -25,6 +27,7 @@ class NewsAPIClient(NewsClient):
             response = requests.get("https://newsapi.org/v2/everything", params=params, timeout=10)
             response.raise_for_status()
             
+            print(response.content)
             # Parse response
             articles = []
             for item in response.json().get("articles", []):

@@ -1,7 +1,6 @@
 from typing import Dict, List
 from models.article import Article
 from clients import NewsAPIClient, NewsDataClient, TheNewsAPIClient
-from processors import Normalizer, Deduplicator, Categorizer
 
 class QuantumNewsService:
     def __init__(self, clients=None):
