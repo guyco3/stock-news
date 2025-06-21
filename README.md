@@ -1,6 +1,6 @@
 # stock-news
 get news easily!
-# Quantum News Aggregator 🚀
+# News Aggregator 🚀
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
@@ -10,12 +10,6 @@ A modular Python tool that fetches and categorizes the latest quantum computing 
 ## Features ✨
 
 - **Multi-API Integration**: Fetches from NewsAPI, NewsData.io, and The News API
-- **Smart Categorization**: 
-  - CEO insights (e.g., Jensen Huang)
-  - Quantum stocks (Rigetti, IonQ, etc.)
-  - Technical developments
-- **Deduplication**: Prevents duplicate articles
-- **Daily Updates**: Optimized for scheduled execution
 - **Modular Architecture**: Easy to extend or modify
 
 ## Installation ⚙️
