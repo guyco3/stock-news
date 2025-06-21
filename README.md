@@ -71,7 +71,7 @@ Quantum Internet Prototype Succeeds in 100km Test (IEEE Spectrum)
 **Add new API:**
 1. Create `newapi_client.py` in `clients/`
 2. Implement `NewsClient` interface
-3. Add to service initialization, in services/news_service.py:
+3. Add to service initialization, in `services/news_service.py`:
 ```bash
 self.clients = [..., NewAPIClient()]
 ```
