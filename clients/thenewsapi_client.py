@@ -11,10 +11,17 @@ class TheNewsAPIClient(NewsClient):
             # Calculate date range
             published_after = (datetime.now(timezone.utc) - timedelta(hours=Settings.TIME_DELTA_HOURS)).strftime("%Y-%m-%dT%H:%M:%S")
             
+            transformed_query = (
+                Settings.QUERY
+                .replace(" OR ", " | ")
+                .replace("(", "")
+                .replace(")", "")
+            )
+
             # Prepare API request
             params = {
                 "api_token": Settings.THE_NEWS_API_KEY,
-                "search": Settings.QUERY.replace(" OR ", " | "),
+                "search": transformed_query,
                 "published_after": published_after,
                 "language": "en",
                 "limit": 10  # Free tier limit

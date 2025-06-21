@@ -8,17 +8,27 @@ from clients.base_client import NewsClient
 class NewsDataClient(NewsClient):
     def fetch_articles(self) -> List[Article]:
         try:
+
+            transformed_query = (
+                Settings.QUERY
+                .replace("(", "")
+                .replace(")", "")
+                .replace(" AND ", " ")
+            )
      
             params = {
                 "apikey": Settings.NEWSDATA_API_KEY,
-                "q": Settings.QUERY,
+                "q": transformed_query,
                 "language": "en"
             }
             
             # Use archive endpoint (supports date ranges)
             response = requests.get("https://newsdata.io/api/1/latest", params=params, timeout=10)
             response.raise_for_status()
+
+            
             data = response.json()
+
             
             # Filter articles to last 12 hours
             cutoff_time = datetime.now(timezone.utc) - timedelta(hours=Settings.TIME_DELTA_HOURS)
@@ -29,16 +39,15 @@ class NewsDataClient(NewsClient):
                     continue
                     
                 pub_date = datetime.strptime(item["pubDate"], "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
-                
-                # Only include articles from last 12 hours
-                if pub_date > cutoff_time:
-                    articles.append(Article(
+                            
+                articles.append(Article(
                         title=item["title"],
                         source=item.get("source_id", "Unknown"),
                         published=pub_date,
                         url=item["link"],
                         content=item.get("content", "") or item.get("description", "")
-                    ))
+                ))
+
             return articles
             
         except Exception as e:

@@ -1,5 +1,5 @@
 # stock-news
-get summaries of news related to quantum stocks!
+get news easily!
 # Quantum News Aggregator 🚀
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://python.org)

@@ -11,7 +11,7 @@ load_dotenv()
 def main():
     # Initialize clients
     clients = [NewsAPIClient(), NewsDataClient(), TheNewsAPIClient()]
-    service = QuantumNewsService([clients[0]])
+    service = QuantumNewsService([clients[1]])
     news = service.get_categorized_news()
 
     news = sorted(news, key=lambda x: x.published, reverse=True)
